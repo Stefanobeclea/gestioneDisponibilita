@@ -1,5 +1,8 @@
 package it.prova.gestionedisponibilita.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -102,6 +105,13 @@ public class DottoreDTO {
 		DottoreDTO result = new DottoreDTO(dottoreModel.getId(), dottoreModel.getCodiceDipendente(), dottoreModel.getNome(),
 				dottoreModel.getCognome(), dottoreModel.isInServizio(), dottoreModel.isInVisita());
 		return result;
+	}
+	public static List<DottoreDTO> createDottoreDTOListFromModelList(List<Dottore> modelListInput) {
+		return modelListInput.stream().map(dottoreEntity -> {
+			DottoreDTO result = DottoreDTO.buildDottoreDTOFromModel(dottoreEntity);
+			
+			return result;
+		}).collect(Collectors.toList());
 	}
 
 }
