@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.prova.gestionedisponibilita.controller.api.exception.DottoreInServizioException;
+import it.prova.gestionedisponibilita.controller.api.exception.DottoreInVisitaException;
 import it.prova.gestionedisponibilita.controller.api.exception.DottoreNotFoundException;
 import it.prova.gestionedisponibilita.controller.api.exception.IdNotNullForInsertException;
 import it.prova.gestionedisponibilita.dto.DottoreDTO;
@@ -73,7 +75,13 @@ public class DottoreController {
 
 		if (dottore == null)
 			throw new DottoreNotFoundException("Dottore not found con id: " + id);
-
+		
+		if(dottore.isInServizio())
+			throw new DottoreInServizioException("Non è possibile rimuovere un dottore in Servizio.");
+		
+		if(dottore.isInVisita())
+			throw new DottoreInVisitaException("Non è possibile rimuovere un dottore in Visita.");
+		
 		dottoreService.rimuovi(dottore);
 	}
 }
