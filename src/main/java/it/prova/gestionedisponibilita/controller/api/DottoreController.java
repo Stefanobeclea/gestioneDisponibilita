@@ -84,4 +84,14 @@ public class DottoreController {
 		
 		dottoreService.rimuovi(dottore);
 	}
+	
+	@GetMapping("/verifica/{codiceDipendente}")
+	public DottoreDTO findByCodiceDipendente(@PathVariable(value = "codiceDipendente", required = true) String codiceDipendente) {
+		Dottore dottore = dottoreService.findByCodiceDipendente(codiceDipendente);
+
+		if (dottore == null)
+			throw new DottoreNotFoundException("Dottore not found con codiceDipendente: " + codiceDipendente);
+
+		return DottoreDTO.buildDottoreDTOFromModel(dottore);
+	}
 }

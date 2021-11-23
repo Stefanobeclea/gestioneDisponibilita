@@ -14,5 +14,7 @@ public interface DottoreService {
 	Dottore inserisciNuovo(Dottore dottoreInstance);
 
 	void rimuovi(Dottore dottoreInstance);
+	
+	Dottore findByCodiceDipendente(String codiceDipendenteInput);
 
 }
