@@ -97,11 +97,11 @@ public class DottoreController {
 	
 	@PostMapping("/impostainVisita")
 	@ResponseStatus(HttpStatus.OK)
-	public DottoreDTO impostainVisita(@RequestBody String codiceDipendente) {
-		Dottore dottore = dottoreService.findByCodiceDipendente(codiceDipendente);
+	public DottoreDTO impostainVisita(@RequestBody DottoreDTO dottoreInput) {
+		Dottore dottore = dottoreService.findByCodiceDipendente(dottoreInput.getCodiceDipendente());
 
 		if (dottore == null)
-			throw new DottoreNotFoundException("Dottore not found con codiceDipendente: " + codiceDipendente);
+			throw new DottoreNotFoundException("Dottore not found con codiceDipendente: " + dottoreInput.getCodiceDipendente());
 
 		dottore.setInVisita(true);
 		

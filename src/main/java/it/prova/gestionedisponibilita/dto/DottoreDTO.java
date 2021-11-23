@@ -1,9 +1,7 @@
 package it.prova.gestionedisponibilita.dto;
 
-import java.util.List;
+import java.util.List; 
 import java.util.stream.Collectors;
-
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -13,16 +11,9 @@ import it.prova.gestionedisponibilita.model.Dottore;
 public class DottoreDTO {
 
 	private Long id;
-
-	@NotBlank(message = "{codiceDipendente.notblank}")
 	private String codiceDipendente;
-
-	@NotBlank(message = "{nome.notblank}")
 	private String nome;
-
-	@NotBlank(message = "{cognome.notblank}")
 	private String cognome;
-
 	private boolean inServizio;
 	private boolean inVisita;
 
