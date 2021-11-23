@@ -94,4 +94,17 @@ public class DottoreController {
 
 		return DottoreDTO.buildDottoreDTOFromModel(dottore);
 	}
+	
+	@PostMapping("/impostainVisita")
+	@ResponseStatus(HttpStatus.OK)
+	public DottoreDTO impostainVisita(@RequestBody String codiceDipendente) {
+		Dottore dottore = dottoreService.findByCodiceDipendente(codiceDipendente);
+
+		if (dottore == null)
+			throw new DottoreNotFoundException("Dottore not found con codiceDipendente: " + codiceDipendente);
+
+		dottore.setInVisita(true);
+		
+		return DottoreDTO.buildDottoreDTOFromModel(dottore);
+	}
 }
