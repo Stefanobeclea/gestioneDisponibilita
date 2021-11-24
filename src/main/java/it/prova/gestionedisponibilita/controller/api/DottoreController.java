@@ -56,25 +56,25 @@ public class DottoreController {
 		return DottoreDTO.buildDottoreDTOFromModel(dottoreInserito);
 	}
 	
-	@PutMapping("/{id}")
-	public DottoreDTO update(@Valid @RequestBody DottoreDTO dottoreInput, @PathVariable(required = true) Long id) {
-		Dottore dottore = dottoreService.caricaSingoloElemento(id);
+	@PutMapping("/{codiceDipendete}")
+	public DottoreDTO update(@Valid @RequestBody DottoreDTO dottoreInput, @PathVariable(required = true) String codiceDipendete) {
+		Dottore dottore = dottoreService.findByCodiceDipendente(codiceDipendete);
 
 		if (dottore == null)
-			throw new DottoreNotFoundException("Dottore not found con id: " + id);
+			throw new DottoreNotFoundException("Dottore not found con codice Dipendente: " + codiceDipendete);
 
-		dottoreInput.setId(id);
+		dottoreInput.setId(dottore.getId());
 		Dottore dottoreAggiornato = dottoreService.aggiorna(dottoreInput.buildDottoreModel());
 		return DottoreDTO.buildDottoreDTOFromModel(dottoreAggiornato);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{codiceDipendete}")
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable(required = true) Long id) {
-		Dottore dottore = dottoreService.caricaSingoloElemento(id);
+	public void delete(@PathVariable(required = true) String codiceDipendete) {
+		Dottore dottore = dottoreService.findByCodiceDipendente(codiceDipendete);
 
 		if (dottore == null)
-			throw new DottoreNotFoundException("Dottore not found con id: " + id);
+			throw new DottoreNotFoundException("Dottore not found con codice Dipendente: " + codiceDipendete);
 		
 		if(dottore.isInServizio())
 			throw new DottoreInServizioException("Non è possibile rimuovere un dottore in Servizio.");
